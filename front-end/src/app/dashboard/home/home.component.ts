@@ -12,6 +12,7 @@ import { StyleTransferService } from 'src/app/core/services/style-transfer.servi
 })
 export class HomeComponent {
   form: FormGroup;
+  output: string;
 
   private componentDestroyed$ = new Subject<boolean>();
 
@@ -40,6 +41,6 @@ export class HomeComponent {
 
     this.styleTransferService.transfer(this.form.value)
       .pipe(takeUntil(this.componentDestroyed$))
-      .subscribe(result => console.log(result));
+      .subscribe(result => this.output = result.output_url);
   }
 }

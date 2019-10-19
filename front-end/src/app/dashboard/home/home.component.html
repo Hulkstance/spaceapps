@@ -10,34 +10,30 @@
 
   <div class="row">
     <div class="col-lg-6">
-      <div class="bs-component">
-        <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
-          <div class="form-group">
-            <label for="contentUrl">Content URL:</label>
-            <input type="text" class="form-control" id="contentUrl" formControlName="contentUrl" />
+      <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+        <div class="form-group">
+          <label for="contentUrl">Content URL:</label>
+          <input type="url" class="form-control" id="contentUrl" formControlName="contentUrl"
+            [class.is-invalid]="form.get('contentUrl').invalid && form.get('contentUrl').dirty" />
+          <div class="invalid-feedback">
+            <div *ngIf="form.get('contentUrl').errors?.required">This field is required.</div>
           </div>
+        </div>
 
-          <div class="form-group">
-            <label for="styleUrl">Style URL:</label>
-            <input type="text" class="form-control" id="styleUrl" formControlName="styleUrl" />
+        <div class="form-group">
+          <label for="styleUrl">Style URL:</label>
+          <input type="url" class="form-control" id="styleUrl" formControlName="styleUrl"
+            [class.is-invalid]="form.get('styleUrl').invalid && form.get('styleUrl').dirty" />
+          <div class="invalid-feedback">
+            <div *ngIf="form.get('styleUrl').errors?.required">This field is required.</div>
           </div>
+        </div>
 
-          <button type="submit" class="btn btn-success" [disabled]="!form.valid">Submit</button>
-        </form>
-      </div>
+        <button type="submit" class="btn btn-success" [disabled]="!form.valid">Submit</button>
+      </form>
+    </div>
+    <div class="col-lg-6">
+      <img [src]="output" *ngIf="output" />
     </div>
   </div>
-
-  <footer id="footer">
-    <div class="row">
-      <div class="col-lg-12">
-        <ul class="list-unstyled">
-          <li><a href="#">Facebook</a></li>
-          <li><a href="#">Twitter</a></li>
-        </ul>
-        <p>Artificial Planet Team &copy; 2019</p>
-      </div>
-    </div>
-  </footer>
-
 </div>
