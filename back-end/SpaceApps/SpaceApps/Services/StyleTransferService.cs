@@ -1,6 +1,7 @@
 ﻿using DeepAI;
 using Microsoft.Extensions.Configuration;
 using SpaceApps.Interfaces;
+using System.IO;
 
 namespace SpaceApps.Service
 {
@@ -13,7 +14,7 @@ namespace SpaceApps.Service
             _configuration = configuration;
         }
 
-        public string Transfer(string contentUrl, string styleUrl)
+        public string TransferFromUrl(string contentUrl, string styleUrl)
         {
             DeepAI_API api = new DeepAI_API(_configuration.GetValue<string>("DeepAISettings:ApiKey"));
 
@@ -21,6 +22,22 @@ namespace SpaceApps.Service
             {
                 content = contentUrl,
                 style = styleUrl
+            });
+
+            return api.objectAsJsonString(resp);
+        }
+
+        public string TransferFromFile(string contentPath, string stylePath)
+        {
+            DeepAI_API api = new DeepAI_API(_configuration.GetValue<string>("DeepAISettings:ApiKey"));
+
+            using var contentStream = File.OpenRead(contentPath);
+            using var styleStream = File.OpenRead(stylePath);
+
+            StandardApiResponse resp = api.callStandardApi("fast-style-transfer", new
+            {
+                content = contentStream,
+                style = styleStream
             });
 
             return api.objectAsJsonString(resp);

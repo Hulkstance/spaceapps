@@ -5,11 +5,15 @@ import { DashboardRoutingModule } from './dashboard-routing.module';
 
 import { HomeComponent } from './home/home.component';
 import { AboutComponent } from './about/about.component';
+import { TransferFromUrlComponent } from './transfer-from-url/transfer-from-url.component';
+import { TransferFromFileComponent } from './transfer-from-file/transfer-from-file.component';
 
 @NgModule({
   declarations: [
     HomeComponent,
-    AboutComponent
+    AboutComponent,
+    TransferFromUrlComponent,
+    TransferFromFileComponent
   ],
   imports: [
     CommonModule,

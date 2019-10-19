@@ -14,7 +14,11 @@ export class StyleTransferService {
     this.actionUrl = `${environment.baseUrls.server}api/styletransfer`;
   }
 
-  transfer(styleTransfer: StyleTransfer) {
-    return this.httpClient.post<StyleTransfer>(this.actionUrl, styleTransfer);
+  transferFromUrl(styleTransfer: StyleTransfer) {
+    return this.httpClient.post<StyleTransfer>(`${this.actionUrl}/urltransfer`, styleTransfer);
+  }
+
+  transferFromFile(formData: FormData) {
+    return this.httpClient.post<StyleTransfer>(`${this.actionUrl}/filetransfer`, formData);
   }
 }

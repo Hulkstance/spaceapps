@@ -1,7 +1,10 @@
-﻿namespace SpaceApps.Interfaces
+﻿using System.IO;
+
+namespace SpaceApps.Interfaces
 {
     public interface IStyleTransferService
     {
-        string Transfer(string contentUrl, string styleUrl);
+        string TransferFromUrl(string contentUrl, string styleUrl);
+        string TransferFromFile(string contentPath, string stylePath);
     }
 }
