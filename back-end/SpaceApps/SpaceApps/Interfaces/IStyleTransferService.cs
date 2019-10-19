@@ -1,6 +1,4 @@
-﻿using System.IO;
-
-namespace SpaceApps.Interfaces
+﻿namespace SpaceApps.Interfaces
 {
     public interface IStyleTransferService
     {
