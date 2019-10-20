@@ -39,6 +39,7 @@ export class TransferFromUrlComponent implements OnDestroy {
 
   generateStyle() {
     this.loading.emit(true);
+    this.outputFile.emit();
 
     this.styleTransferService.getRandomNASAImage()
       .pipe(
@@ -56,6 +57,7 @@ export class TransferFromUrlComponent implements OnDestroy {
     }
 
     this.loading.emit(true);
+    this.outputFile.emit();
 
     this.styleTransferService.transferFromUrl(this.form.value)
       .pipe(

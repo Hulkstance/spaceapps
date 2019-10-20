@@ -53,6 +53,7 @@ export class TransferFromFileComponent implements OnDestroy {
     }
 
     this.loading.emit(true);
+    this.outputFile.emit();
 
     const uploadData = new FormData();
     uploadData.append('content', this.contentData, this.contentData.name);
