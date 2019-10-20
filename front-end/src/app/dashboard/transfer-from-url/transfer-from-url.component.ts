@@ -37,6 +37,19 @@ export class TransferFromUrlComponent implements OnDestroy {
     this.componentDestroyed$.complete();
   }
 
+  generateStyle() {
+    this.loading.emit(true);
+
+    this.styleTransferService.getRandomNASAImage()
+      .pipe(
+        takeUntil(this.componentDestroyed$),
+        finalize(() => this.loading.emit(false))
+      )
+      .subscribe(image => {
+        this.form.controls.styleUrl.setValue(image.url);
+      });
+  }
+
   onSubmit() {
     if (this.form.invalid) {
       return;

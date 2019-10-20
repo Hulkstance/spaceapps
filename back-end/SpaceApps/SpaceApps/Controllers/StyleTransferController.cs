@@ -3,6 +3,7 @@ using SpaceApps.Interfaces;
 using SpaceApps.Models;
 using System.IO;
 using System.Net.Http.Headers;
+using System.Threading.Tasks;
 
 namespace SpaceApps.Controllers
 {
@@ -11,20 +12,33 @@ namespace SpaceApps.Controllers
     public class StyleTransferController : ControllerBase
     {
         private readonly IStyleTransferService _styleTransferService;
-
+        
         public StyleTransferController(IStyleTransferService styleTransferService)
         {
             _styleTransferService = styleTransferService;
         }
 
-        [HttpPost("urltransfer")]
-        public string TransferFromUrl(StyleTransferFromUrl model)
+        [HttpGet]
+        public async Task<ActionResult<string>> GetRandomNASAImageAsync()
         {
-            return _styleTransferService.TransferFromUrl(model.ContentUrl, model.StyleUrl);
+            var randomImage = await _styleTransferService.GetRandomNASAImageAsync();
+
+            if (!string.IsNullOrEmpty(randomImage))
+            {
+                return Ok(new { Url = randomImage });
+            }
+
+            return NoContent();
+        }
+
+        [HttpPost("urltransfer")]
+        public ActionResult<string> TransferFromUrl(StyleTransferFromUrl model)
+        {
+            return Ok(_styleTransferService.TransferFromUrl(model.ContentUrl, model.StyleUrl));
         }
 
         [HttpPost("filetransfer"), DisableRequestSizeLimit]
-        public string TransferFromFile()
+        public ActionResult<string> TransferFromFile()
         {
             var files = Request.Form.Files;
             var pathToSave = Path.Combine(Directory.GetCurrentDirectory(), Path.Combine("Resources", "Images"));
@@ -49,10 +63,10 @@ namespace SpaceApps.Controllers
                 System.IO.File.Delete(contentPath);
                 System.IO.File.Delete(stylePath);
 
-                return result;
+                return Ok(result);
             }
 
-            return string.Empty;
+            return NoContent();
         }
     }
 }

@@ -14,6 +14,10 @@ export class StyleTransferService {
     this.actionUrl = `${environment.baseUrls.server}api/styletransfer`;
   }
 
+  getRandomNASAImage() {
+    return this.httpClient.get<any>(this.actionUrl);
+  }
+
   transferFromUrl(styleTransfer: StyleTransfer) {
     return this.httpClient.post<StyleTransfer>(`${this.actionUrl}/urltransfer`, styleTransfer);
   }
